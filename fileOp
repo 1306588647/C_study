@@ -1,0 +1,30 @@
+#include <stdio.h>
+main()
+{   
+  FILE *rf, *wf ; int i, j;
+  int w[10][10], n = 0, mm, nn ;
+  rf = fopen("insimple.dat","r");
+  wf = fopen("outsimple.dat","w");  
+  fscanf(rf, "%d %d", &mm, &nn) ;
+  printf("%d\n",nn);
+  
+    for(i = 0 ; i < mm ; i++)
+	{
+	  for(j = 0 ; j < nn ; j++) 
+	  {
+		  fscanf(rf, "%d", &w[i][j]) ;
+	  }
+	}
+    
+	 for(i = 0 ; i < mm ; i++)
+	{
+	  for(j = 0 ; j < nn ; j++) 
+	  {
+		  fprintf(wf, "%6d", w[i][j]) ; 
+		  fprintf(wf, "\n") ;
+	  }
+	}
+  fclose(rf) ; 
+  fclose(wf) ;
+}
+
