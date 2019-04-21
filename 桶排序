@@ -1,0 +1,21 @@
+#include <stdio.h>
+int main()
+{
+	int a[99999] = {0};
+	int i,n,t,j;
+	printf("几个数据：");
+	scanf("%d",&n);
+	for ( i = 1; i <=n ; i++)
+	{
+		printf("第%d个数据：",i);
+		scanf("%d",&t);
+		a[t]++;
+	}
+	for ( i = 99999; i >=0; i--)
+	{
+		for (j = 1; j <= a[i]; j++)
+		{
+			printf("%d\t",i);
+		}
+	}
+}
