@@ -1,0 +1,259 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MaxStu 10				//顺序表最大长度
+#define MaxName 10				//名字的最大长度
+
+typedef struct						//定义一个结构体
+{
+	int iNum;						//学号
+	char Name[MaxName];				//姓名
+	long PhoneNum;					//电话
+}STU;
+
+//插入函数
+int Insert(STU student[])
+{
+	int m,i;			//m接受用户输入插入学生数量
+	while (1)
+	{
+		
+		printf("请输入要插入的学生人数：");
+		scanf("%d", &m);
+		fflush(stdin);
+		system("cls");
+		if (m <= 0)					//如果m<=0重新输入
+		{
+			printf("插入的学生人数不能为零或者负数！\n");
+			printf("输入回车重新输入插入学生人数。");
+			getchar(); getchar();
+			system("cls");
+			continue;
+		}
+		else if (m > MaxStu)			//如果m大于顺序表范围重新输入
+		{
+			printf("插入的学生人数超出存储范围！\n");
+			printf("输入回车重新输入插入学生人数。");
+			getchar(); getchar();
+			system("cls");
+			continue;
+		}
+		else					//如果m在两者之间则正常输入数据
+		{
+			for ( i = 0; i < m; i++)
+			{
+				printf("请输入第%d位学生信息：\n",i+1);
+				printf("学号：");
+				scanf("%d",&student[i].iNum);
+				fflush(stdin);
+				printf("姓名：");
+				scanf("%s", student[i].Name);
+				fflush(stdin);
+				printf("电话：");
+				scanf("%d", &student[i].PhoneNum);
+				fflush(stdin);
+			}
+			printf("插入成功！");
+			printf("输入回车返回主菜单。");
+			getchar(); getchar();
+			system("cls");
+			break;
+
+
+		}
+	}
+	return m;					//讲学生数量返回给count
+}
+//删除函数
+int Delete(STU student[],int count)
+{
+	int m, i;					//m存放索要删除的学号
+	if (count == 0)				//如果学生数量为0则提醒先输入学生信息
+	{
+		printf("请先录入学生信息！\n");
+		printf("输入回车返回主菜单。");
+		getchar(); getchar();
+		system("cls");
+	}
+	else
+	{
+		printf("请输入要删除学生的学号：");
+		scanf("%d", &m);
+		fflush(stdin);
+		for (i = 0; i < count; i++)
+		{
+			if (student[i].iNum == m)
+			{
+				for (i; i <count ; i++)				//将要删除的学生后面的学生依次向前挪一位
+				{
+					student[i].iNum = student[i + 1].iNum;
+					student[i].PhoneNum = student[i + 1].PhoneNum;
+					strcpy(student[i].Name, student[i + 1].Name);
+				}
+				count--;
+				printf("删除成功！\n");
+				printf("输入回车返回主菜单。");
+				getchar(); getchar();
+				system("cls");
+				break;
+			}
+
+		}
+		if (i == count)				//如果没找到返回主菜单
+		{
+			printf("没有找到该学号学生！\n");
+			printf("输入回车返回主菜单。");
+			getchar(); getchar();
+			system("cls");
+		}
+		return count;
+	}
+
+}
+
+
+//查找函数
+void FindStu(STU student[],int count)
+{
+	int m, i;					//m用来接受所查找的学号
+	if (count == 0)				//如果学生数量为0则提醒先输入学生信息
+	{
+		printf("请先录入学生信息！\n");
+		printf("输入回车返回主菜单。");
+		getchar(); getchar();
+		system("cls");
+	}
+	else
+	{
+		printf("请输入要查找的学生学号：");
+		scanf("%d", &m);
+		fflush(stdin);
+		for (i = 0; i < count; i++)
+		{
+			if (student[i].iNum == m)						//如果查找成功则输出学生信息
+			{
+
+				printf("查找成功！\n");
+				printf("学号：%d\n", student[i].iNum);
+				printf("姓名：%s\n", student[i].Name);
+				printf("电话：%d\n", student[i].PhoneNum);
+				printf("输入回车返回主菜单。");
+				getchar(); getchar();
+				system("cls");
+				break;
+			}
+
+		}
+		if (i == count)//如果没找到返回主菜单
+		{
+			printf("没有找到该学号学生！\n");
+			printf("输入回车返回主菜单。");
+			getchar(); getchar();
+			system("cls");
+		}
+	}
+
+
+}
+
+//打印输出函数
+void PrintAll(STU student[],int count)
+{
+	void DataSort(STU student[], int count);//先将顺序表按照学号从小大排列好
+	int i;
+	if (count == 0)//如果学生数量为0则提醒先输入学生信息
+	{
+		printf("请先录入学生信息！\n");
+		printf("输入回车返回主菜单。");
+		getchar(); getchar();
+		system("cls");
+	}
+	else										//输出学生信息
+	{
+		DataSort(student, count);
+		printf("学号            姓名            手机\n");
+		for (i = 0; i < count; i++)
+		{
+			printf("%-16d", student[i].iNum);
+			printf("%-16s", student[i].Name);
+			printf("%d\n", student[i].PhoneNum);
+			
+		}
+		printf("打印输出成功！\n");
+		printf("输入回车返回主菜单。");
+		getchar(); getchar();
+		system("cls");
+	}
+
+
+
+
+}
+
+void DataSort(STU student[],int count)//冒泡排序将学号从小大排列
+{
+	int i, j;
+	STU temp;
+	for (i = 0; i < count; i++)
+	{
+		for ( j = 0; j < count-i-1; j++)
+		{
+			if (student[j+1].iNum<student[j].iNum)
+			{
+				temp = student[j + 1];
+				student[j + 1] = student[j];
+				student[j]=temp;
+			}
+		}
+	}
+}
+
+
+int main()
+{
+	int num,count=0;					//num用来接受用户输入，count用来统计学生个数
+	STU student[MaxStu];				//定义了一个顺序表
+	while (1)
+	{
+		printf("-------------------顺序表-------------------\n");
+		printf("*             1.插入学生信息               *\n");
+		printf("*             2.删除学生信息               *\n");
+		printf("*             3.查找学生信息               *\n");
+		printf("*             4.显示所有学生信息           *\n");
+		printf("*             5.退出                       *\n");
+		printf("--------------------------------------------\n");
+		printf("请输入编号：");
+		scanf("%d",&num);
+		fflush(stdin);
+		switch (num)
+		{
+		case 1:
+			system("cls");
+			count=Insert(student);		//调用插入函数
+			break;
+		case 2:
+			system("cls");
+			count=Delete(student,count);//调用删除函数
+			break;
+		case 3:
+			system("cls");
+			FindStu(student,count);//调用查找函数
+			break;
+		case 4:
+			system("cls");
+			PrintAll(student,count);//调用输出函数
+			break;
+		case 5:
+			return 0;
+			break;
+		default:
+			printf("输入错误，请输入正确的编号！\n");
+			getchar();
+			system("cls");
+			continue;
+		}
+	}
+
+
+
+}
