@@ -1,0 +1,261 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX 20
+typedef struct student
+{
+	long StuID;					//学号
+	char StuName[MAX];			//姓名
+	struct student* next;
+}STU;
+
+void InsertStu(STU *head);		//插入函数
+void SortStu(STU* head);		//按学号排序函数
+void DeleteStu(STU* head);		//删除学生信息
+void FindStu(STU* head);		//查找学生信息
+void PrintStu(STU* head);		//打印所有学生信息
+
+
+
+int main()
+{
+	STU* head=(STU *)malloc(sizeof(STU));
+	head->next = NULL;
+	int number;			//接收用户输入的功能编号
+	while (1)
+	{
+		system("cls");
+		printf("-------------------单链表-------------------\n");
+		printf("*             1.添加学生信息               *\n");
+		printf("*             2.删除学生信息               *\n");
+		printf("*             3.查找学生信息               *\n");
+		printf("*             4.显示所有学生信息           *\n");
+		printf("*             5.退出                       *\n");
+		printf("--------------------------------------------\n");
+		printf("请输入功能编号：");
+		scanf("%d", &number);
+		fflush(stdin);
+		switch (number)
+		{
+		case 1:
+			system("cls");
+			InsertStu(head);		//添加学生信息
+			break;
+		case 2:
+			system("cls");
+			DeleteStu(head);		//删除学生信息
+			break;
+		case 3:
+			system("cls");
+			FindStu(head);			//查找学生信息
+			break;
+		case 4:
+			system("cls");
+			PrintStu(head);			//打印所有学生信息
+			break;
+		case 5:
+			exit(0);
+		default:
+			printf("输入错误！\n");
+			printf("按回车键重新输入。");
+			getchar(); getchar();
+			break;
+		}
+	}
+}
+
+//插入函数
+void InsertStu(STU* head)
+{
+	STU* new,*p;
+	int n,i;
+	p = head;
+A:	system("cls");
+	printf("请输入要添加的学生人数：");
+	scanf("%d",&n);
+	fflush(stdin);
+	if (n <= 0)							//判断输入学生人数是否正确
+	{
+		printf("请输入大于0的数。\n");
+		printf("按回车键重新输入人数。");
+		getchar(); getchar();
+		goto A;
+	}
+	while (p->next)						//将指针移到最后一个节点
+	{
+		p = p->next;
+	}
+	for ( i = 0; i < n; i++)			//将新的学生节点插入到链表末尾
+	{
+		new = (STU*)malloc(sizeof(STU));
+		new->next = NULL;
+		printf("请输入第%d个学生信息\n",i+1);
+		printf("姓名：");
+		scanf("%s",new->StuName);
+		fflush(stdin);
+		printf("学号：");
+		scanf("%ld", &new->StuID);
+		fflush(stdin);
+		p->next= new;
+		p = new;
+	}
+	SortStu(head);				//按学号正序排列
+	printf("学生添加信息成功！\n");
+	printf("按回车键返回主菜单。");
+	getchar(); getchar();
+
+}
+
+
+//排序函数
+void SortStu(STU* head)
+{
+	long temp;
+	char tempName[MAX];
+	STU* p;
+	STU* q;
+	STU* small;
+	if (head->next == NULL)
+	{
+		printf("无学生信息，请先输入信息！\n");
+		printf("按回车返回主菜单。");
+		getchar(); getchar();
+		return;
+	}
+	if (head->next->next != NULL)						//如果节点数量大于等于2则用选择排序
+	{
+		for (p = head->next; p->next != NULL; p = p->next)
+		{
+			small = p;
+			for (q = p->next; q != NULL; q = q->next)
+			{
+				if (q->StuID < small->StuID)
+				{
+					small = q;
+				}
+			}
+			if (small != p)
+			{
+				temp = small->StuID;
+				small->StuID = p->StuID;
+				p->StuID = temp;
+				strcpy(tempName, small->StuName);
+				strcpy(small->StuName, p->StuName);
+				strcpy(p->StuName, tempName);
+			}
+		}
+	}
+}
+
+
+//删除函数
+void DeleteStu(STU* head)
+{
+	STU* right, * left;
+	long ID;
+	if (head->next == NULL)			//如果没有一个学生则返回主菜单
+	{
+		printf("无学生信息，请先输入信息！\n");
+		printf("按回车返回主菜单。");
+		getchar(); getchar();
+		return;
+	}
+	system("cls");
+	printf("请输入要删除学生的学号：");
+	scanf("%ld",&ID);
+	fflush(stdin);
+	left = head;
+	right = left->next;
+	while (right)
+	{
+		if (right->StuID == ID)
+		{
+			left->next = right->next;
+			free(right);
+			right = left->next;
+
+		}
+		else
+		{
+			left = right;
+			right = right->next;
+		}
+	}
+	printf("删除成功！\n");
+	printf("按回车键返回主菜单。");
+	getchar(); getchar();
+}
+
+
+
+
+
+//查找学生信息
+void FindStu(STU* head)
+{
+	STU *p;
+	long ID;
+	int flag=0;
+	if (head->next == NULL)						//如果没有一个学生则返回主菜单
+	{
+		printf("无学生信息，请先输入信息！\n");
+		printf("按回车返回主菜单。");
+		getchar(); getchar();
+		return;
+	}
+	printf("请输入要查找学生的学号：");
+	scanf("%ld",&ID);
+	fflush(stdin);
+	p = head->next;
+	while (p)
+	{
+		if (p->StuID == ID)
+		{
+			printf("姓名\t学号\n");
+			printf("%-8s",p->StuName);
+			printf("%ld\n", p->StuID);
+			flag = 1;
+			break;
+		}
+		p = p->next;
+	}
+	if (flag)
+	{
+		printf("查找成功！\n");
+		printf("按回车返回主菜单！");
+		getchar(); getchar();
+	}
+	else
+	{
+		printf("未找到该学生！\n");
+		printf("按回车返回主菜单！");
+		getchar(); getchar();
+	}
+}
+
+
+
+//打印函数
+void PrintStu(STU* head)
+{
+	STU *p;
+	if (head->next == NULL)
+	{
+		printf("无学生信息，请先输入信息！\n");
+		printf("按回车返回主菜单。");
+		getchar(); getchar();
+		return;
+	}
+	p = head->next;
+	printf("姓名\t学号\n");
+	while (p)
+	{
+		printf("%-8s", p->StuName);
+		printf("%ld\n", p->StuID);
+		p = p->next;
+	}
+	printf("所有学生信息输出成功！\n");
+	printf("按回车键返回主菜单。");
+	getchar(); getchar();
+
+}
