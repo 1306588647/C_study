@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100
+#define TRUE 1
+#define FALSE 0
+
+typedef struct
+{
+	int data[MAX];
+	int top;
+}SqStack;
+
+void SqStackInit(SqStack *Number);			//初始化栈
+int SqStackPush(SqStack *Number,int x);	//入栈函数
+int SqStackPop(SqStack* Number, int* e);	//出栈函数
+
+
+int main()
+{
+	int n,i,m,x;
+	SqStack Number;
+	SqStackInit(&Number);				//初始化栈
+	printf("要输入几个数字？");
+	scanf("%d",&n);
+	fflush(stdin);
+	for ( i = 0; i < n; i++)
+	{
+		printf("请输入第%d的数字\n",i+1);
+		scanf("%d",&m);
+		SqStackPush(&Number,m);
+	}
+	printf("\n");
+	for ( i = 0; i < n; i++)
+	{
+		if (SqStackPop(&Number, &x))
+		{
+			printf("%d\t",x);
+		}
+	}
+
+
+
+}
+
+
+//栈的初始化
+void SqStackInit(SqStack *Number)
+{
+	Number->top = -1;
+}
+
+
+
+//入栈函数
+int SqStackPush(SqStack *Number, int x)
+{
+	if (Number->top == MAX - 1)
+	{
+		printf("栈已满，无法进栈！");
+		getchar();
+		return FALSE;
+	}
+	Number->top++;
+	Number->data[Number->top]=x;
+	return TRUE;
+}
+
+
+
+
+int SqStackPop(SqStack* Number, int* e)
+{
+	if (Number->top == -1)
+	{
+		printf("栈中没有元素！");
+		getchar();
+		return FALSE;
+	}
+	*e = Number->data[Number->top];
+	Number->top--;
+	return TRUE;
+}
