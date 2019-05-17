@@ -1,0 +1,73 @@
+#include <stdio.h>
+#define MAX 10
+typedef struct QNode
+{
+	int data;
+	struct QNode* next;
+}SqQueue;
+
+typedef struct
+{
+	SqQueue* front, * rear;
+}link;
+
+void EnQueue(SqQueue* S, int x);	//入队函数
+void DeleteQueue(SqQueue* S, int *x);//出队列
+
+int main()
+{
+	SqQueue *head = (SqQueue *)malloc(sizeof(SqQueue));
+	int n, x, m,i;
+	link Queue;
+	Queue.front = head;
+	Queue.rear = head;
+	printf("请输入要入队的元素个数？");
+	scanf("%d",&n);
+	for ( i = 0; i < n; i++)
+	{
+		printf("请输入第%d个元素：",i+1);
+		scanf("%d",&x);
+		EnQueue(&Queue,x);
+	}
+	printf("\n");
+	for ( i = 0; i < n; i++)
+	{
+		DeleteQueue(&Queue, &m);
+		printf("%d\t",m);
+	}
+}
+
+
+void EnQueue(link* S, int x)
+{
+	SqQueue *new = (SqQueue*)malloc(sizeof(SqQueue));
+	new->next = NULL;
+	if (!new)
+	{
+		exit(0);
+	}
+	new->data = x;
+	new->next = NULL;
+	S->rear->next = new;
+	S->rear = new;
+}
+
+
+void DeleteQueue(link* S, int* m)
+{
+	SqQueue* p;
+	if (S->front == S->rear)
+	{
+		printf("队列已经为空");
+		exit(0);
+	}
+	p = S->front->next;
+	*m = p->data;
+	S->front->next = p->next;
+	if (S->rear == p)
+	{
+		S->rear = S->front;			//若对头是队尾，则删除后将rear指向头结点
+	}
+	free(p);
+	
+}
