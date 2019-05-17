@@ -1,0 +1,67 @@
+#include <stdio.h>
+#define MAX 10
+#define OK 1
+#define ERROR 0
+
+typedef struct
+{
+	int data[MAX];
+	int front;
+	int rear;
+}SqQueue;
+
+void InitQueue(SqQueue* S);			//初始化循环队列
+void EnQueue(SqQueue* S, int x);	//入队函数
+void DeleteQueue(SqQueue* S, int *x);//出队列
+
+int main()
+{
+	SqQueue S;
+	int n, x, m,i;
+	InitQueue(&S);
+	printf("请输入要入队的元素个数？");
+	scanf("%d",&n);
+	for ( i = 0; i < n; i++)
+	{
+		printf("请输入第%d个元素：",i+1);
+		scanf("%d",&x);
+		EnQueue(&S,x);
+	}
+	printf("\n");
+	for ( i = 0; i < n; i++)
+	{
+		DeleteQueue(&S, &x);
+		printf("%d\t",x);
+	}
+}
+
+
+void InitQueue(SqQueue *S)
+{
+	S->front = 0;
+	S->rear = 0;
+}
+
+
+void EnQueue(SqQueue* S, int x)
+{
+	if (S->rear == MAX - 1)
+	{
+		printf("队列已满");
+		exit(0);
+	}
+	S->data[S->rear] = x;
+	S->rear++;
+}
+
+
+void DeleteQueue(SqQueue* S, int* x)
+{
+	if (S->front == S->rear)
+	{
+		printf("队列为空！");			//队列保留一个空单元
+		exit(0);
+	}
+	*x = S->data[S->front];
+	S->front++;
+}
