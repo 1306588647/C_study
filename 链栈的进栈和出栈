@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+typedef struct StackNode
+{
+	int Data;
+	struct StackNode* next;
+}StackNode;
+
+typedef struct LinkStack
+{
+	StackNode* top;
+	int count;
+}LinkStack;
+
+void StackPush(StackNode* head, int x);				//链栈的入栈
+void StackPop(LinkStack* link, int* x);				//链栈的出栈
+
+int main()
+{
+	int i,n,x,m;
+	LinkStack* link = (LinkStack *)malloc(sizeof(LinkStack));
+	link->count = 0;
+	link->top = NULL;
+	printf("请问需要多少个元素入栈：");
+	scanf("%d",&n);
+	for ( i = 0; i < n; i++)
+	{
+		printf("第%d个元素：",i+1);
+		scanf("%d",&x);
+		StackPush(link, x);
+	}
+	printf("\n");
+	for ( i = 0; i < n; i++)
+	{
+		StackPop(link, &m);
+		printf("%d\t",m);
+	}
+}
+
+//入链栈函数
+void StackPush(LinkStack* link, int x)
+{
+	StackNode* new = (StackNode *)malloc(sizeof(StackNode));
+	new->Data = x;
+	new->next = link->top;
+	link->top = new;
+	link->count++;
+}
+
+//出栈函数
+void StackPop(LinkStack* link, int *x)
+{
+	StackNode* p;
+	if (link->top == NULL)
+	{
+		printf("栈中无元素");
+		return;
+	}
+	*x = link->top->Data;
+	p = link->top;
+	link->top = link->top->next;
+	free(p);
+	link->count--;
+}
