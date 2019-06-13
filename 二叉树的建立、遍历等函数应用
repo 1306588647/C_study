@@ -1,0 +1,120 @@
+#include <stdlib.h>
+#include <stdio.h>
+typedef char BTElemType; //二叉树的数据元素类型
+//二叉树结点类型
+typedef struct BiTNode
+{
+	BTElemType data;
+	struct BiTNode *lchild, *rchild;    /*左右孩子指针*/
+}BiTNode, *BiTree;
+	
+int count = 0;				//结点个数
+int Leafcount = 0;			//叶子结点个数
+
+//以下为二叉树链式存储结构的操作函数
+//创建二叉树（先序遍历方式）
+BiTree createbt()
+{
+	BiTree bt;
+	char ch;
+	scanf(" %c", &ch);
+	if (ch == '*')
+	{
+		bt = NULL;
+	}
+	else
+	{
+		bt = (BiTree)malloc(sizeof(BiTNode));
+		bt->data = ch;
+		bt->lchild = createbt();
+		bt->rchild = createbt();
+	}
+	//以下代码由学生编写
+	//按先序输入二叉树结点值，递归创建二叉链表
+	//以上代码由学生编写
+	return bt;
+}
+//结点访问
+void visit(BiTree bt)
+{
+	printf("%5c", bt->data);
+}
+//先序遍历
+void PreOrder(BiTree bt)
+{
+	if (bt != NULL)
+	{
+		visit(bt);
+		PreOrder(bt->lchild);
+		PreOrder(bt->rchild);
+	}
+}
+//中序遍历
+void InOrder(BiTree bt)
+{
+	if (bt != NULL)
+	{
+		InOrder(bt->lchild);
+		visit(bt);
+		InOrder(bt->rchild);
+	}
+	//以下代码由学生编写
+	//按中序递归访问二叉树结点值并显示
+	//以上代码由学生编写
+}
+//后序遍历
+void PostOrder(BiTree bt)
+{
+	if (bt != NULL)
+	{
+		PostOrder(bt->lchild);
+		PostOrder(bt->rchild);
+		visit(bt);
+	}
+	//以下代码由学生编写
+	//按后序递归访问二叉树结点值并显示
+	//以上代码由学生编写
+}
+
+//计算二叉树结点个数
+int Count(BiTree bt)			
+{
+	if (bt != NULL)
+	{
+		count++;
+		Count(bt->lchild);
+		Count(bt->rchild);
+	}
+	return count;
+}
+
+
+//计算二叉树叶子结点个数
+int LeafCount(BiTree bt)
+{
+	if (bt != NULL)
+	{
+		if (bt->lchild == NULL&&bt->rchild == NULL)
+		{
+			Leafcount++;
+		}
+		LeafCount(bt->lchild);
+		LeafCount(bt->rchild);
+	}
+	return Leafcount;
+
+}
+
+void main(void)
+{
+	BiTree t;
+	t = createbt();
+	PreOrder(t);
+	printf("\n");
+	InOrder(t);
+	printf("\n");
+	PostOrder(t);
+	printf("\n");
+	printf("共有%d个结点\n", Count(t));
+	printf("共有%d个叶子结点\n", LeafCount(t));
+}
