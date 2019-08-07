@@ -3,34 +3,34 @@
 #define OK 1
 
 
-//Ë³ĞòÕ»ÊµÏÖ
-#define STACK_INIT_SIZE 20   //Ë³ĞòÕ»´æ´¢¿Õ¼ä³õÊ¼³ß´ç
-#define STACK_INCREMENT 5    //Ë³ĞòÕ»´æ´¢¿Õ¼ä·ÖÅäÔöÁ¿
+//é¡ºåºæ ˆå®ç°
+#define STACK_INIT_SIZE 20   //é¡ºåºæ ˆå­˜å‚¨ç©ºé—´åˆå§‹å°ºå¯¸
+#define STACK_INCREMENT 5    //é¡ºåºæ ˆå­˜å‚¨ç©ºé—´åˆ†é…å¢é‡
 
 
 typedef struct 
 {
-	int* base; //´æ·ÅÕ»ÔªËØµÄÊı×é
-	int top;          //Õ»¶¥Ö¸Ê¾±äÁ¿
-	int stacksize;     //Êı×é³õÊ¼³ß´ç
-}SqStack; //×Ô¶¨Òå½á¹¹ÀàĞÍSqStack
+	int* base; //å­˜æ”¾æ ˆå…ƒç´ çš„æ•°ç»„
+	int top;          //æ ˆé¡¶æŒ‡ç¤ºå˜é‡
+	int stacksize;     //æ•°ç»„åˆå§‹å°ºå¯¸
+}SqStack; //è‡ªå®šä¹‰ç»“æ„ç±»å‹SqStack
 
 
 
-//³õÊ¼»¯Õ»
+//åˆå§‹åŒ–æ ˆ
 int InitStack(SqStack* s) 
 {
 	s->base = (int*)malloc(STACK_INIT_SIZE * sizeof(int));
-	s->top = 0;  //Õ»¶¥Ê¼ÖÕÖ¸ÏòÊµ¼ÊÕ»¶¥ÔªËØÏÂÒ»¸öÎ»ÖÃ
+	s->top = 0;  //æ ˆé¡¶å§‹ç»ˆæŒ‡å‘å®é™…æ ˆé¡¶å…ƒç´ ä¸‹ä¸€ä¸ªä½ç½®
 	s->stacksize = STACK_INIT_SIZE;
 	return OK;
 }
-//ÅĞ¶ÏÕ»ÊÇ·ñ¿Õ
+//åˆ¤æ–­æ ˆæ˜¯å¦ç©º
 int StackIsEmpty(SqStack* s) 
 {
 	return s->top == 0;
 }
-//ÈëÕ»
+//å…¥æ ˆ
 void Push(SqStack* s, int e) 
 {
 	if (s->top >= s->stacksize) 
@@ -41,7 +41,7 @@ void Push(SqStack* s, int e)
 	}
 	s->base[s->top++] = e;
 }
-//³öÕ»
+//å‡ºæ ˆ
 int Pop(SqStack* s)
 {
 	int e;
@@ -53,7 +53,7 @@ void conversion(SqStack* s)
 {
 	int num, n;
 	InitStack(s);
-	printf("Çë·Ö±ğÊäÈëÒª×ª»¯µÄÊıºÍÒª×ª»»µÄ½øÖÆ£º\n");
+	printf("è¯·åˆ†åˆ«è¾“å…¥è¦è½¬åŒ–çš„æ•°å’Œè¦è½¬æ¢çš„è¿›åˆ¶ï¼š\n");
 	scanf("%d%d", &num, &n);
 	while (num)
 	{
