@@ -6,7 +6,7 @@ void Positive(int min,int max)
 	{
 		for (j = min; j <= i; j++)
 		{
-			printf("%d¡Á%d=%-3d  ", j, i, j*i);
+			printf("%dÃ—%d=%-3d  ", j, i, j*i);
 		}
 		printf("\n");
 	}
@@ -19,7 +19,7 @@ void Reverse(int min, int max)
 	{
 		for (j = i; j >= min; j--)
 		{
-			printf("%d¡Á%d=%-3d  ", j, i, j*i);
+			printf("%dÃ—%d=%-3d  ", j, i, j*i);
 		}
 		printf("\n");
 	}
@@ -29,7 +29,7 @@ int main()
 {
 	int min, max,temp;
 	char a;
-	printf("Çë·Ö±ğÊäÈëÏÂÏŞºÍÉÏÏŞ£º");
+	printf("è¯·åˆ†åˆ«è¾“å…¥ä¸‹é™å’Œä¸Šé™ï¼š");
 	scanf("%d %d", &min, &max);
 	if (min > max)
 	{
@@ -37,7 +37,7 @@ int main()
 		min = max;
 		max = temp;
 	}
-	printf("ÊÇ·ñÕıĞò£¨y/n£©:");
+	printf("æ˜¯å¦æ­£åºï¼ˆy/nï¼‰:");
 	getchar();
 	fflush(stdin);
 	scanf("%c", &a);
