@@ -13,7 +13,7 @@ typedef struct student
 
 void LeadStuendt(STU* head);			//1.从文件导入数据
 void FindStudent(STU* head);			//2.查找学生信息
-STU* AddStudent(STU *head);				//3.添加学生信息
+STU* AddStudent(STU* head);				//3.添加学生信息
 void ModifyStudent(STU* head);			//4.修改学生信息
 void DeleteStudent(STU* head);			//5.删除学生信息
 void StatisticsStudent(STU* head);		//6.统计学生成绩
@@ -24,7 +24,7 @@ void SaveStudent(STU* head);			//9.将信息保存到电脑文件
 
 int main()
 {
-	STU *head=(STU *)malloc(sizeof(STU));		
+	STU* head = (STU*)malloc(sizeof(STU));
 	head->next = NULL;
 	int a;
 	while (1)
@@ -102,10 +102,10 @@ int main()
 
 //1.从文件导入数据
 void LeadStuendt(STU* head)
-{	
+{
 	char No[65];
-	STU* new,*p=head;
-	FILE *fp = fopen("StudentScore.doc","r");
+	STU* new, * p = head;
+	FILE* fp = fopen("StudentScore.doc", "r");
 	if (!fp)
 	{
 		printf("文件打开失败！\n");
@@ -113,8 +113,8 @@ void LeadStuendt(STU* head)
 		getchar(); getchar();
 		return;
 	}
-	fgets(No,64,fp);					//将第一行的姓名学号这些标识符吸收
-	while (p->next!=NULL)				//将指针移到最后一个节点
+	fgets(No, 64, fp);					//将第一行的姓名学号这些标识符吸收
+	while (p->next != NULL)				//将指针移到最后一个节点
 	{
 		p = p->next;
 	}
@@ -122,7 +122,7 @@ void LeadStuendt(STU* head)
 	{
 		new = (STU*)malloc(sizeof(STU));
 		new->next = NULL;
-		fscanf(fp,"%s",new->StudentName);
+		fscanf(fp, "%s", new->StudentName);
 		fscanf(fp, "%ld", &new->StudentID);
 		for (int i = 0; i < 3; i++)
 		{
@@ -134,8 +134,8 @@ void LeadStuendt(STU* head)
 	p = head->next;
 	head->next = p->next;
 	free(p);
-	p = head->next;	
-	while (p->next->next!=NULL)				//由于feof()在结束的时候还会再读取一行数据，将这一行数据删除
+	p = head->next;
+	while (p->next->next != NULL)				//由于feof()在结束的时候还会再读取一行数据，将这一行数据删除
 	{
 		p = p->next;
 	}
@@ -167,10 +167,10 @@ A:	system("cls");
 	printf("1.输入姓名查询\n");
 	printf("2.输入学号查询\n");
 	printf("您输入的为：");
-	scanf("%d",&n);
+	scanf("%d", &n);
 	fflush(stdin);
 	system("cls");
-	if (n == 1)					
+	if (n == 1)
 	{
 
 		printf("请输入所查找学生的姓名：");
@@ -180,7 +180,7 @@ A:	system("cls");
 	else if (n == 2)
 	{
 		printf("请输入所查找学生的学号：");
-		scanf("%ld",&ID);
+		scanf("%ld", &ID);
 		fflush(stdin);
 	}
 	else
@@ -219,7 +219,7 @@ A:	system("cls");
 		}
 		else if (n == 2)
 		{
-			if (ID!=move->StudentID)
+			if (ID != move->StudentID)
 			{
 				move = move->next;
 			}
@@ -237,7 +237,7 @@ A:	system("cls");
 				flag = 1;
 			}
 		}
-		
+
 	}
 	if (flag)
 	{
@@ -291,7 +291,7 @@ B:	system("cls");
 			printf("学号：");
 			scanf("%ld", &new->StudentID);
 			fflush(stdin);
-Chinese:	printf("语文成绩：");
+		Chinese:	printf("语文成绩：");
 			x = scanf("%f", &new->score[0]);
 			fflush(stdin);
 			if (x != 1 || new->score[0] < 0)
@@ -300,7 +300,7 @@ Chinese:	printf("语文成绩：");
 				getchar();
 				goto Chinese;
 			}
-Math:		printf("数学成绩：");
+		Math:		printf("数学成绩：");
 			x = scanf("%f", &new->score[1]);
 			fflush(stdin);
 			if (x != 1 || new->score[1] < 0)
@@ -310,7 +310,7 @@ Math:		printf("数学成绩：");
 				goto Math;
 			}
 
-English:	printf("英语成绩：");
+		English:	printf("英语成绩：");
 			x = scanf("%f", &new->score[2]);
 			fflush(stdin);
 			if (x != 1 || new->score[2] < 0)
@@ -342,7 +342,7 @@ void ModifyStudent(STU* head)
 		return;
 	}
 	printf("输入要修改学生信息的学号：");
-	scanf("%ld",&ID);
+	scanf("%ld", &ID);
 	fflush(stdin);
 	while (move)
 	{
@@ -440,7 +440,7 @@ C:	system("cls");
 		}
 		else if (n == 2)
 		{
-			if (right->StudentID ==ID)
+			if (right->StudentID == ID)
 			{
 				left->next = right->next;
 				free(right);
@@ -475,7 +475,7 @@ C:	system("cls");
 void StatisticsStudent(STU* head)
 {
 	STU* move = head->next;
-	int count=0,num,x;
+	int count = 0, num, x;
 	float low, high;
 	if (head->next == NULL)
 	{
@@ -489,9 +489,9 @@ D:	system("cls");
 	printf("2.数学\n");
 	printf("3.英语\n");
 	printf("请输入要统计的学科：");
-	x=scanf("%d",&num);
+	x = scanf("%d", &num);
 	fflush(stdin);
-	if (x!=1||num<0||num>3)
+	if (x != 1 || num < 0 || num>3)
 	{
 		printf("请输入正确的编号！\n");
 		printf("按回车键重新输入。");
@@ -499,11 +499,11 @@ D:	system("cls");
 		goto D;
 	}
 E:	printf("请输入一个分数段（如：60--70）：\n");
-	scanf("%f", &low); 
+	scanf("%f", &low);
 	getchar();
-	getchar(); 
+	getchar();
 	fflush(stdin);
-	scanf("%f", &high); 
+	scanf("%f", &high);
 	fflush(stdin);
 	if (low < 0 || high < 0)
 	{
@@ -524,20 +524,20 @@ E:	printf("请输入一个分数段（如：60--70）：\n");
 			move = move->next;
 		}
 	}
-	printf("该分数段的学生数量为：%d\n",count);
+	printf("该分数段的学生数量为：%d\n", count);
 	printf("统计成功！\n");
 	printf("按回车返回主菜单\n");
 	getchar(); getchar();
-	
+
 }
 
 //7.学生信息排序
 void SortStudent(STU* head)
 {
-	STU* move; 
+	STU* move;
 	STU* p;
 	STU* max;
-	int num,x;
+	int num, x;
 	float temp;
 	char NameTemp[MAX];
 	long IDTemp;
@@ -562,10 +562,10 @@ F:	system("cls");
 		getchar(); getchar(); getchar();
 		goto F;
 	}
-	for (p =head->next;p->next!=NULL;p=p->next)
+	for (p = head->next; p->next != NULL; p = p->next)
 	{
 		max = p;
-		for(move = p->next;move;move=move->next)
+		for (move = p->next; move; move = move->next)
 		{
 			if (move->score[num - 1] > p->score[num - 1])
 			{
@@ -574,7 +574,7 @@ F:	system("cls");
 		}
 		if (max != p)
 		{
-			strcpy(NameTemp,max->StudentName);
+			strcpy(NameTemp, max->StudentName);
 			strcpy(max->StudentName, p->StudentName);
 			strcpy(p->StudentName, NameTemp);
 
@@ -582,7 +582,7 @@ F:	system("cls");
 			max->StudentID = p->StudentID;
 			p->StudentID = IDTemp;
 			int i;
-			for ( i = 0; i < 3; i++)
+			for (i = 0; i < 3; i++)
 			{
 				temp = max->score[i];
 				max->score[i] = p->score[i];
@@ -599,7 +599,7 @@ F:	system("cls");
 //8.输出所有学生信息
 void PrintStudent(STU* head)
 {
-	STU* move=head->next;
+	STU* move = head->next;
 	if (head->next == NULL)
 	{
 		printf("无学生信息，请先添加学生信息！\n");
@@ -633,7 +633,7 @@ void PrintStudent(STU* head)
 //9.将信息保存到电脑上
 void SaveStudent(STU* head)
 {
-	FILE* fp = fopen("StudentScore.doc","w");
+	FILE* fp = fopen("StudentScore.doc", "w");
 	if (head->next == NULL)
 	{
 		printf("无学生信息，请先添加学生信息！\n");
@@ -649,21 +649,21 @@ void SaveStudent(STU* head)
 	}
 	STU* move = head->next;
 
-	fprintf(fp,"%s","姓名           ");
-	fprintf(fp,"%s","学号           ");
-	fprintf(fp,"%s","语文           ");
-	fprintf(fp,"%s","数学           ");
-	fprintf(fp,"%s","英语\n");
+	fprintf(fp, "%s", "姓名           ");
+	fprintf(fp, "%s", "学号           ");
+	fprintf(fp, "%s", "语文           ");
+	fprintf(fp, "%s", "数学           ");
+	fprintf(fp, "%s", "英语\n");
 	while (move)
 	{
 		int i;
-		fprintf(fp,"%-15s", move->StudentName);
-		fprintf(fp,"%-15ld", move->StudentID);
+		fprintf(fp, "%-15s", move->StudentName);
+		fprintf(fp, "%-15ld", move->StudentID);
 		for (i = 0; i < 3; i++)
 		{
-			fprintf(fp,"%-15.2f", move->score[i]);
+			fprintf(fp, "%-15.2f", move->score[i]);
 		}
-		fprintf(fp,"%s","\n");
+		fprintf(fp, "%s", "\n");
 		move = move->next;
 	}
 	fclose(fp);
